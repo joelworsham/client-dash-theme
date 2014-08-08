@@ -1,0 +1,37 @@
+#site-nav-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  padding: 10px;
+  font-size: 5em;
+  z-index: 1;
+  @media only screen and (max-width: 600px){
+    font-size: 4em;
+  }
+  @media only screen and (max-width: 400px){
+    font-size: 3em;
+  }
+  &:hover {
+    color: darken(#fff, 10%);
+  }
+}
+
+#site-navigation {
+  padding: 10px;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    margin: 0;
+    padding: 0;
+    font-size: 175%;
+    a {
+      &:hover {
+        color: lighten( $primary-color, 15% );
+      }
+    }
+  }
+}

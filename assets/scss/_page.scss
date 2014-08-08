@@ -1,0 +1,19 @@
+.post-title {
+  a {
+    @extend .button;
+    @extend h3;
+    font-size: 1em;
+    width: 100%;
+    color: #fff;
+    padding: 0.5em;
+  }
+}
+.post-meta {
+  p {
+    margin: 1.25rem 0;
+  }
+  a {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

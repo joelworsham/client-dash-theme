@@ -1,0 +1,42 @@
+#site-header {
+  background-color: $primary-color;
+  color: #fff;
+  padding: 30px 0;
+  font-size: 4em;
+  h1 {
+    letter-spacing: -2px;
+    color: #fff;
+    margin: 0;
+  }
+  p {
+    margin: 0;
+  }
+  .site-tagline {
+    font-size: 60%;
+  }
+  img, span {
+    vertical-align: middle;
+  }
+}
+
+#wrapper.home #site-header {
+  text-align: center;
+  h1 {
+    font-size: 170%;
+  }
+  @media only screen and ( max-width: 750px ) {
+    font-size: 2.8em;
+  }
+  @media only screen and ( max-width: 600px ) {
+    font-size: 2em;
+    img {
+      width: 300px;
+    }
+  }
+  @media only screen and ( max-width: 400px ) {
+    font-size: 1.6em;
+    img {
+      width: 200px;
+    }
+  }
+}

@@ -1,0 +1,64 @@
+#comments {
+  ol {
+    position: relative;
+    margin: 0;
+  }
+}
+
+#commentform input[type="submit"] {
+  @extend .button, .button.small;
+  font-size: $button-font-sml !important;
+}
+
+.comment-item {
+  margin: 0 0 20px 5em;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  &:hover {
+    &:before {
+      color: #999;
+    }
+  }
+  &:before {
+    @extend .icon;
+    @extend .icon-quotes-left;
+    position: absolute;
+    left: 0;
+    font-size: 4em;
+    color: #ccc;
+  }
+  &:last-of-type {
+    border: none;
+  }
+}
+
+.comments-title {
+  @extend h2;
+  font-size: 3em;
+}
+.comment-reply-link {
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
+}
+
+span.comment-author {
+  @extend a;
+  &:hover {
+    color: $primary-color !important;
+  }
+}
+
+a.comment-author {
+  @extend a;
+}
+
+.comment-text {
+  overflow: hidden;
+}
+
+.comment-meta {
+  @extend .post-meta;
+  margin: 0;
+}
