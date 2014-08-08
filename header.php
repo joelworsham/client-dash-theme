@@ -38,7 +38,7 @@
 					<?php if ( is_home() ) : ?>
 						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/main-logo.png"/>
 						<h1 class="site-title">CLIENT DASH</h1>
-<!--						<p class="site-tagline">Some really awesome tagline that sums it up.</p>-->
+						<p class="site-tagline"><?php echo get_bloginfo( 'description' ) ? get_bloginfo( 'description' ) : ''; ?></p>
 					<?php else: ?>
 						<a href="<?php echo bloginfo( 'url' ); ?>">
 							<h1 class="site-title">
