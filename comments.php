@@ -1,12 +1,4 @@
 <?php
-/**
- * The template for displaying comments.
- *
- * The area of the page that contains both current comments
- * and the comment form.
- *
- * @package testest
- */
 
 /*
  * If the current post is protected by a password and
@@ -72,7 +64,7 @@ if ( post_password_required() ) {
 
 
 <?php
-function theme_comment( $comment, $args, $depth ) {
+function theme_comment( $comment ) {
 
 	$author_name = get_comment_author();
 	$author_link = get_author_posts_url( $comment->user_id );

@@ -16,7 +16,7 @@ class ClientDash_Theme {
 	 *
 	 * @since Client Dash Theme 0.1
 	 */
-	public $version = '0.1';
+	public $version = '0.1.1';
 
 	/**
 	 * Classes to go into the wrapper div.
