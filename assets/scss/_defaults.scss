@@ -1,34 +1,60 @@
 body {
-  font-family: $body-font-family;
   line-height: normal;
 }
 
 h1, h2 {
-  font-family: $body-font-family;
   font-weight: 900;
-  line-height: 1em;
 }
 
 h3, h4, h5, h6 {
   font-weight: bold;
-  font-family: $body-font-family;
-}
-
-h1 {
 }
 
 h2 {
-  font-size: 4em;
+  font-size: 3em;
+  line-height: 1em;
 }
 
 h3 {
-  font-size: 3em;
+  font-size: 2.5em;
 }
 
 h4 {
   font-size: 2em;
 }
 
+@media only screen and (max-width: $medium-breakpoint) {
+
+  h2 {
+    font-size: 2.5em;
+  }
+  h3 {
+    font-size: 2em;
+  }
+  h4 {
+    font-size: 1.5em;
+  }
+}
+
 a:hover {
   color: darken( $primary-color, 10%);
+}
+
+hr {
+  border-color: #ccc;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.wp-caption {
+  width: auto !important;
+}
+
+.wp-caption-text {
+  text-align: center;
+  font-style: italic;
+  color: #777;
 }

@@ -1,19 +1,27 @@
+@charset "UTF-8";
+
+@import "foundation/functions";
+
+@import "settings";
+
 // Foundation
 @import "foundation/components/grid";
+@import "foundation/components/visibility";
 @import "foundation/components/forms";
 @import "foundation/components/buttons";
+@import "foundation/components/breadcrumbs";
 @import "foundation/components/offcanvas";
 
 // Client Dash
-@import "settings";
 @import "font-open-sans";
 @import "font-icomoon";
 @import "classes";
 @import "defaults";
-@import "buttons";
+@import "elements";
 @import "nav";
 @import "header";
 @import "page";
+@import "sidebar";
 @import "home";
 @import "footer";
 @import "comments";

@@ -1,7 +1,3 @@
-<?php // Closing the #content div ?>
-</div>
-</section>
-
 <footer id="site-footer">
 	<div class="row">
 		<div class="columns large-6 small-12 info">

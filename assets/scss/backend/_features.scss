@@ -1,0 +1,15 @@
+// Center the icon metabox content
+#cd-feature-icon, #cd-addon-icon {
+  .inside {
+    text-align: center;
+
+    .icon {
+      font-size: 60px;
+      margin: 10px 0;
+    }
+
+    input {
+      text-align: center;
+    }
+  }
+}

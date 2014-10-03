@@ -11,6 +11,7 @@ class ClientDash_Theme_Shortcodes extends ClientDash_Theme {
 		)
 	);
 
+
 	function __construct() {
 		foreach ( $this->shortcodes as $shortcode ) {
 			if ( ! isset( $shortcode['callback'] ) ) {

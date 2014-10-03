@@ -32,7 +32,9 @@ class ClientDash_Theme {
 	 */
 	public $necessities = array(
 		'scripts',
-		'shortcodes'
+		'shortcodes',
+		'admin/features',
+		'admin/addons',
 	);
 
 	/**
@@ -46,63 +48,41 @@ class ClientDash_Theme {
 				array(
 					'handle' => 'normalize'
 				),
-//				array(
-//					'handle' => 'foundation',
-//					'filename' => 'foundation.min',
-//					'version' => 5
-//				),
 				array(
-					'handle' => 'frontend-main',
-					'filename' => 'frontend.main.min'
+					'handle'   => 'frontend-main',
+					'filename' => 'client-dash-theme-frontend.min'
 				),
 			),
-			'js' => array(
+			'js'  => array(
 				array(
-					'handle' => 'frontend-main',
-					'filename' => 'frontend.main',
-					'deps' => array( 'jquery', 'foundation' ),
-					'footer' => true
+					'handle'   => 'frontend-main',
+					'filename' => 'client-dash-theme.min',
+					'deps'     => array( 'frontend-deps' ),
+					'footer'   => true
 				),
 				array(
-					'handle' => 'foundation',
-					'filename' => 'foundation.min',
-					'version' => 5,
-					'deps' => array(
-						'jquery',
-						'modernizr',
-						'fastclick',
-						'jquery-cookie',
-						'placeholder'
-					),
-					'footer' => true
+					'handle'   => 'frontend-deps',
+					'filename' => 'client-dash-theme-deps.min',
+					'deps'     => array( 'jquery' ),
+					'footer'   => true
 				),
-				array(
-					'handle' => 'modernizr',
-					'deps' => array( 'jquery' )
-				),
-				array(
-					'handle' => 'fastclick',
-					'deps' => array( 'jquery' ),
-					'footer' => true
-				),
-				array(
-					'handle' => 'jquery-cookie',
-					'filename' => 'jquery.cookie',
-					'deps' => array( 'jquery' ),
-					'footer' => true
-				),
-				array(
-					'handle' => 'placeholder',
-					'deps' => array( 'jquery' ),
-					'footer' => true
-				)
-			)
+			),
 		),
-		'backend' => array(
+		'backend'  => array(
 			'css' => array(
+				array(
+					'handle'   => 'backend-main',
+					'filename' => 'client-dash-theme-backend.min',
+				),
 			),
-			'js' => array(
-			)
+			'js'  => array(
+				array(
+					'handle'   => 'backend-main',
+					'filename' => 'client-dash-theme-backend.min',
+					'deps'     => array( 'jquery', 'jquery-ui-core' ),
+					'footer'   => true,
+				),
+			),
 		),
 	);
 
@@ -113,7 +93,7 @@ class ClientDash_Theme {
 	 */
 	public $nav_menus = array(
 		array(
-			'ID' => 'site-nav',
+			'ID'   => 'site-nav',
 			'name' => 'Site Navigation'
 		)
 	);
@@ -133,13 +113,30 @@ class ClientDash_Theme {
 	function __construct() {
 		$this->require_necessities();
 
-		add_action( 'wp', array( $this, 'add_wrapper_classes' ) );
-
+		// Register nav menus
 		add_action( 'init', array( $this, 'register_nav_menus' ) );
 
-		add_filter( 'excerpt_length', array( $this, 'custom_excerpt_length'), 999 );
+		// Modify the default excerpt length
+		add_filter( 'excerpt_length', array( $this, 'custom_excerpt_length' ), 999 );
 
+		// Add sidebars
+		add_action( 'init', array( $this, 'register_sidebars' ) );
+
+		// Add some separators
+		add_action( 'admin_menu', array( $this, 'add_separators' ), 9999 );
+
+		// Allow featured images
 		add_theme_support( 'post-thumbnails' );
+
+		// Show draft posts on addons archive
+		add_action( 'pre_get_posts', array( $this, 'addons_show_draft' ) );
+
+		// Modify breadcrumbs
+		add_filter( 'wpseo_breadcrumb_single_link', array( $this, 'modify_breadcrumbs' ), 10, 2 );
+		add_filter( 'wpseo_breadcrumb_output', array( $this, 'modify_breadcrumbs_wrapper' ) );
+
+		// Google Analytics
+		add_action( 'wp_head', array( $this, 'google_analytics' ), 999 );
 	}
 
 	/**
@@ -154,21 +151,6 @@ class ClientDash_Theme {
 	}
 
 	/**
-	 * Adds all classes for the wrapper.
-	 *
-	 * @since Client Dash Theme 0.1
-	 */
-	public function add_wrapper_classes() {
-		if ( is_user_logged_in() ) {
-			$this->wrapper_classes .= ' logged-in';
-		}
-
-		if ( is_home() ) {
-			$this->wrapper_classes .= ' home';
-		}
-	}
-
-	/**
 	 * Registers all nav menus for the theme.
 	 *
 	 * @since Client Dash Theme 0.1
@@ -177,6 +159,58 @@ class ClientDash_Theme {
 		foreach ( $this->nav_menus as $menu ) {
 			register_nav_menu( $menu['ID'], $menu['name'] );
 		}
+	}
+
+	public function register_sidebars() {
+
+		register_sidebar( array(
+			'name' => 'Blog',
+			'id' => 'blog',
+			'description' => 'Shows on the blog feed.',
+		) );
+	}
+
+	public function add_separators() {
+
+		global $menu;
+
+		// Move posts up one so there's room for a separator
+		$menu[4] = $menu[5];
+
+		$menu[5] = array(
+			'',
+			'read',
+			'cd-separator-1',
+			'',
+			'wp-menu-separator'
+		);
+
+		$menu[8] = array(
+			'',
+			'read',
+			'cd-separator-2',
+			'',
+			'wp-menu-separator'
+		);
+	}
+
+	public function addons_show_draft( $query ) {
+
+		$query->set( 'post_status', array( 'publish', 'draft' ) );
+		$query->set( 'post_status', array( 'numberposts', -1 ) );
+	}
+
+	public function modify_breadcrumbs( $html, $link ) {
+
+		$class = $link['url'] == 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ? 'class="current"' : '';
+		$link['url'] = $link['url'] == 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ? '#' : $link['url'];
+		return "<li $class><a href='$link[url]'>$link[text]</a></li>";
+	}
+
+	public function modify_breadcrumbs_wrapper( $breadcrumb ) {
+
+		// Replace all the gunk with nothing
+		return preg_replace( '/ » |\n|\t|\r|<span.*?>|<\/span>/', '', $breadcrumb );
 	}
 
 	/**
@@ -197,6 +231,33 @@ class ClientDash_Theme {
 	 */
 	public static function images_dir() {
 		echo get_template_directory_uri() . '/assets/images/';
+	}
+
+	public function google_analytics() {
+
+		if ( ! is_user_logged_in() ) {
+			ob_start();
+			?>
+			<script>
+				(function (i, s, o, g, r, a, m) {
+					i['GoogleAnalyticsObject'] = r;
+					i[r] = i[r] || function () {
+						(i[r].q = i[r].q || []).push(arguments)
+					}, i[r].l = 1 * new Date();
+					a = s.createElement(o),
+						m = s.getElementsByTagName(o)[0];
+					a.async = 1;
+					a.src = g;
+					m.parentNode.insertBefore(a, m)
+				})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+				ga('create', 'UA-37145568-2', 'auto');
+				ga('send', 'pageview');
+
+			</script>
+			<?php
+			echo ob_get_clean();
+		}
 	}
 }
 

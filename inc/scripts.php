@@ -81,14 +81,12 @@ class ClientDash_Theme_Scripts extends ClientDash_Theme {
 	 * @since Client Dash Theme 0.1
 	 */
 	public function enqueue_backend_files() {
-		foreach( $this->files['backend'] as $types ) {
-			foreach( $types as $type => $files ) {
-				foreach( $files as $file ) {
-					if ( $type == 'css' ) {
-						wp_enqueue_style( $file['handle'] );
-					} else {
-						wp_enqueue_script( $file['handle'] );
-					}
+		foreach( $this->files['backend'] as $type => $files) {
+			foreach( $files as $file ) {
+				if ( $type == 'css' || $type == 'font' ) {
+					wp_enqueue_style( $file['handle'] );
+				} else {
+					wp_enqueue_script( $file['handle'] );
 				}
 			}
 		}

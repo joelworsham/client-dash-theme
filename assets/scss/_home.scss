@@ -1,3 +1,81 @@
 #home-download {
   text-align: center;
 }
+
+// Features
+.feature {
+
+  hr {
+    margin: 50px 0;
+  }
+
+  .feature-icon, .feature-title {
+    text-align: center;
+  }
+
+  .feature-icon {
+    font-size: 5em;
+  }
+}
+
+
+// Addons
+.featured-addons {
+  margin-bottom: 30px;
+}
+
+.addons-view-all {
+  margin: 30px 0 0;
+}
+
+.addons {
+
+  hr {
+    margin: 50px 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .addon-icon {
+    font-size: 8em;
+    text-align: center;
+    margin: 0;
+
+    @media only screen and (max-width: $medium-breakpoint) {
+      font-size: 5em;
+    }
+  }
+
+  .addon-title {
+    text-align: center;
+    font-size: 1em;
+  }
+
+  .addon {
+    float: left !important;
+  }
+
+  // Coming Soon
+  .addon.draft .addon-icon {
+    position: relative;
+
+    &:after {
+      content: "Coming soon!";
+      position: absolute;
+      background: #0074a2;
+      left: 50%;
+      top: 45%;
+      width: 140px;
+      margin-left: -70px;
+      text-align: center;
+      color: #fff;
+      font-style: italic;
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+}
