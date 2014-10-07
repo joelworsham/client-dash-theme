@@ -43,7 +43,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    style: 'compressed'
+                    style: 'expanded'
                 },
                 files: {
                     './assets/css/client-dash-theme-frontend.min.css': './assets/scss/frontend.scss'

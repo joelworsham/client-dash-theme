@@ -7,3 +7,19 @@
   border-color: #ddd;
   display: inline-block;
 }
+
+// Forms
+.gform_wrapper {
+  input, textarea, select {
+    // Don't hit submit buttons
+    &:not([type="submit"]) {
+      font-size: 14px !important;
+      padding: 5px !important;
+    }
+  }
+}
+
+// Generator
+.generator-confirm {
+  text-align: center;
+}

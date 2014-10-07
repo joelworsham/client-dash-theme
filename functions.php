@@ -16,7 +16,7 @@ class ClientDash_Theme {
 	 *
 	 * @since Client Dash Theme 0.1
 	 */
-	public $version = '0.1.1';
+	public $version = '0.2';
 
 	/**
 	 * Classes to go into the wrapper div.
@@ -134,6 +134,11 @@ class ClientDash_Theme {
 		// Modify breadcrumbs
 		add_filter( 'wpseo_breadcrumb_single_link', array( $this, 'modify_breadcrumbs' ), 10, 2 );
 		add_filter( 'wpseo_breadcrumb_output', array( $this, 'modify_breadcrumbs_wrapper' ) );
+
+		// Remove page title on generator confirm
+		if ( isset( $_POST['gform_submit'] ) && $_POST['gform_submit'] == '1' ) {
+			add_filter( 'cd_page_title', '__return_false' );
+		}
 
 		// Google Analytics
 		add_action( 'wp_head', array( $this, 'google_analytics' ), 999 );
